@@ -24,7 +24,7 @@
 
 const axios = require('axios')
 
-const ngrokUrl = 'http://6f866ceb.ngrok.io/'
+const ngrokUrl = 'http://fa278102.ngrok.io'
 
 const customAxios = axios.create({
     baseURL: ngrokUrl

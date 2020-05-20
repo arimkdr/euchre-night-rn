@@ -6,41 +6,29 @@ import {Buffer} from 'buffer';
 window.localStorage = AsyncStorage;
 global.Buffer = Buffer;
 import store from './store'
+import {NativeRouter as Router, Route, Switch} from 'react-router-native'
+import Home from './components/Home'
+import Hand from './components/PlayerHand'
 
 function DisconnectedApp(props) {
-  useEffect(() => {
-    props.fetchCards(4)
-  }, [])
-
-  if (!props.cards && !props.cards[0]) {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    )
-  }
-
-  const cardDivs = props.cards.map(card => {
-    return (
-      <View key={card.id}>
-        <Text>Suit: {card.suit}</Text>
-        <Text>Value: {card.value}</Text>
-      </View>
-    )
-  })
-
-  const cardsToRender = cardDivs.slice(0, 5)
 
   return (
     <View style={styles.container}>
-      {cardsToRender}
+      <Switch>
+        <Route exact path='/'>
+          <Home />
+        </Route>
+        <Route path='/hand'>
+          <Hand />
+        </Route>
+      </Switch>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 2,
+    flex: 1,
     backgroundColor: '#cf8',
     alignItems: 'center',
     justifyContent: 'space-evenly',
@@ -64,7 +52,9 @@ const App = connect(mapStateToProps, mapDispatchToProps)(DisconnectedApp)
 export default Container = () => {
   return (
     <Provider store={store}>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </Provider>
   )
 }
